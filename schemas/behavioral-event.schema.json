@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/eberhardtj/agent-behavioral-history/blob/main/schemas/behavioral-event.schema.json",
+  "title": "Agent Behavioral History Event",
+  "description": "A timestamped, attributable event that may contribute evidence to an autonomous agent's longitudinal behavioral history.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "agent_id",
+    "timestamp",
+    "event_type",
+    "encounter_id"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique identifier for this event."
+    },
+    "agent_id": {
+      "type": "string",
+      "description": "Identifier of the agent whose behavior is being recorded."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Time at which the event occurred."
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "message",
+        "request",
+        "response",
+        "refusal",
+        "tool_action",
+        "delegation",
+        "acceptance",
+        "correction",
+        "repair",
+        "escalation",
+        "termination",
+        "other"
+      ],
+      "description": "Category of observable event."
+    },
+    "encounter_id": {
+      "type": "string",
+      "description": "Identifier of the encounter containing this event."
+    },
+    "counterparty_id": {
+      "type": "string",
+      "description": "Identifier of another agent or entity involved in the event, when applicable."
+    },
+    "context": {
+      "type": "string",
+      "description": "Short description of the relevant interaction context."
+    },
+    "content": {
+      "type": "string",
+      "description": "Human- or machine-readable description of what occurred."
+    },
+    "source": {
+      "type": "string",
+      "description": "Identifier or URI for the originating record."
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional implementation-specific metadata.",
+      "additionalProperties": true
+    }
+  }
+}
