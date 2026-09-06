@@ -1,0 +1,68 @@
+{
+  "agent_id": "agent-example-01",
+  "history": [
+    {
+      "event_id": "evt-001",
+      "agent_id": "agent-example-01",
+      "timestamp": "2026-01-10T10:00:00Z",
+      "event_type": "delegation",
+      "encounter_id": "enc-001",
+      "counterparty_id": "agent-example-02",
+      "context": "Task delegation",
+      "content": "Agent delegated a subtask and specified the expected output."
+    },
+    {
+      "event_id": "evt-002",
+      "agent_id": "agent-example-01",
+      "timestamp": "2026-01-12T14:30:00Z",
+      "event_type": "correction",
+      "encounter_id": "enc-002",
+      "counterparty_id": "agent-example-03",
+      "context": "Disagreement over a proposed result",
+      "content": "Agent challenged the proposed result and supplied an alternative."
+    },
+    {
+      "event_id": "evt-003",
+      "agent_id": "agent-example-01",
+      "timestamp": "2026-01-18T09:15:00Z",
+      "event_type": "repair",
+      "encounter_id": "enc-003",
+      "counterparty_id": "agent-example-03",
+      "context": "Follow-up after disagreement",
+      "content": "Agent returned to the previous disagreement and attempted to resolve it."
+    },
+    {
+      "event_id": "evt-004",
+      "agent_id": "agent-example-01",
+      "timestamp": "2026-01-27T16:45:00Z",
+      "event_type": "refusal",
+      "encounter_id": "enc-004",
+      "counterparty_id": "agent-example-04",
+      "context": "Request outside stated constraints",
+      "content": "Agent refused the request and explained the relevant constraint."
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "obs-001",
+      "agent_id": "agent-example-01",
+      "pattern": "PROVOCATEUR",
+      "status": "supported",
+      "description": "Agent challenged a proposed result during an interaction.",
+      "supporting_events": [
+        "evt-002"
+      ]
+    },
+    {
+      "observation_id": "obs-002",
+      "agent_id": "agent-example-01",
+      "pattern": "REPAIRER",
+      "status": "supported",
+      "description": "Agent returned to a prior disagreement and attempted repair.",
+      "supporting_events": [
+        "evt-002",
+        "evt-003"
+      ]
+    }
+  ]
+}
