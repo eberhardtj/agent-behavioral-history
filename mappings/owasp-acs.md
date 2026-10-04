@@ -3,6 +3,16 @@
 _Draft contribution for ACS / Agentic Security Initiative discussion._
 _Written against ACS v0.1.0 (`specification/v0.1.0`, repo version 0.1.2)._
 
+> **On sources and licensing.** ACS is dual-licensed: prose under `docs/**` is
+> CC BY-SA 4.0, and `specification/**` schemas are Apache-2.0
+> ([LICENSING.md](https://github.com/GenAI-Security-Project/agent-control-standard/blob/integration/LICENSING.md)).
+> Copyright 2025-2026 The OWASP GenAI Security Project and the ACS contributors.
+> This document is licensed CC BY 4.0 (see [LICENSE-DOCS](../LICENSE-DOCS)) and quotes
+> short excerpts of ACS prose for identification and commentary, with attribution. Those
+> quotations are not adaptations, so no ShareAlike obligation is asserted over this
+> document. If the working group reads any portion as a derivative of ACS prose, we will
+> relicense that portion CC BY-SA 4.0 on request rather than argue the point.
+
 ## The distinction, in two runs
 
 Same external result. Very different actors.
