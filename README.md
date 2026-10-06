@@ -173,3 +173,9 @@ The schemas, terminology, and examples are intended to be useful for researchers
 Implementations may differ.
 
 The specification is intended to make their behavioral records more comparable and inspectable.
+
+## Licence
+
+Documentation (Markdown) is licensed under [CC BY 4.0](./LICENSE-DOCS).
+Schemas, examples and code are licensed under [Apache 2.0](./LICENSE).
+
