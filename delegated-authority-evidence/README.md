@@ -1,20 +1,34 @@
 # Delegated Authority Evidence
 
-This reference model separates six facts that are often collapsed in agent systems:
+A small implementation-neutral reference model for recording delegated authority behavior in autonomous agent systems.
 
-1. Agent identity
-2. Active authority grant
-3. Authority mutation / delegation lineage
-4. Selected operation
-5. Downstream enforcement disposition
-6. External effect
+The model separates facts that are often collapsed together:
+
+1. agent identity
+2. active authority grant
+3. authority mutation and delegation lineage
+4. selected operation
+5. authority decision
+6. downstream enforcement disposition
+7. external effect
 
 The central rule is:
 
-> An enforcement outcome is not an authority verdict.
+> **An enforcement outcome is not an authority verdict.**
 
-A protected resource may correctly block an out-of-scope operation while the actor itself has still crossed its delegated authority.
+A downstream control may successfully block an operation while the actor itself has still selected an operation outside its delegated authority.
 
-Likewise, an actor may correctly refuse an out-of-scope operation without invoking any downstream control.
+Conversely, an actor may remain within authority by refusing the operation before any downstream control is invoked.
 
-These cases can produce the same external effect while representing different authority behavior.
+## Canonical example
+
+Two agents may produce the same external outcome:
+
+### Case A
+
+```text
+Authority              Spend <= EUR 1,000
+Selected operation     Transfer EUR 10,000
+Authority decision     CROSSED
+Enforcement            BLOCKED
+External effect        NO_EFFECT
