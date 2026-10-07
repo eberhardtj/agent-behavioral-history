@@ -1,1 +1,41 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-behavioral-history:delegated-authority-evidence:selected-operation:1.0",
+  "title": "Selected Operation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operationId",
+    "actor",
+    "type"
+  ],
+  "properties": {
+    "operationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "minLength": 1
+    },
+    "amount": {
+      "type": ["number", "null"]
+    },
+    "currency": {
+      "type": ["string", "null"]
+    },
+    "counterparty": {
+      "type": ["string", "null"]
+    },
+    "resource": {
+      "type": ["string", "null"]
+    },
+    "parameters": {
+      "type": "object"
+    }
+  }
+}
