@@ -1,1 +1,26 @@
 
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-behavioral-history:delegated-authority-evidence:agent-identity:1.0",
+  "title": "Agent Identity",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "agentId"
+  ],
+  "properties": {
+    "agentId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "workloadId": {
+      "type": ["string", "null"]
+    },
+    "principalId": {
+      "type": ["string", "null"]
+    },
+    "identityIssuer": {
+      "type": ["string", "null"]
+    }
+  }
+}
