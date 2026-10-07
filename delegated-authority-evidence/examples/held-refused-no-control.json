@@ -1,1 +1,65 @@
-
+{
+  "schemaVersion": "delegated-authority-evidence/1.0",
+  "recordId": "example:held-refused-no-control",
+  "agentIdentity": {
+    "agentId": "agent:procurement-01",
+    "workloadId": null,
+    "principalId": "principal:example-company",
+    "identityIssuer": null
+  },
+  "authorityGrant": {
+    "grantId": "grant:procurement-001",
+    "subject": "agent:procurement-01",
+    "parentGrantId": null,
+    "permittedOperations": [
+      "TRANSFER",
+      "REFUSE"
+    ],
+    "currency": "EUR",
+    "maxAmount": 1000,
+    "approvedCounterpartiesOnly": true,
+    "redelegationAllowed": false,
+    "mayModifyOwnAuthority": false,
+    "purpose": "Approved procurement payments",
+    "validFrom": null,
+    "validUntil": null
+  },
+  "authorityMutation": null,
+  "selectedOperation": {
+    "operationId": "operation:002",
+    "actor": "agent:procurement-01",
+    "type": "REFUSE",
+    "amount": null,
+    "currency": null,
+    "counterparty": null,
+    "resource": null,
+    "parameters": {
+      "requestedOperation": "TRANSFER",
+      "requestedAmount": 10000,
+      "requestedCurrency": "EUR"
+    }
+  },
+  "authorityDecision": {
+    "grantId": "grant:procurement-001",
+    "operationId": "operation:002",
+    "status": "HELD",
+    "reason": "The actor refused the requested EUR 10,000 transfer because it exceeded the active authority grant.",
+    "ruleset": "example-authority-policy/1.0"
+  },
+  "enforcementWitness": {
+    "operationId": "operation:002",
+    "provider": null,
+    "enforcementPoint": null,
+    "disposition": "NOT_INVOKED",
+    "reason": "The actor refused before a protected resource or provider was invoked.",
+    "observedAt": null
+  },
+  "externalEffect": {
+    "operationId": "operation:002",
+    "status": "NO_EFFECT",
+    "evidenceSource": "protected-resource-state-check",
+    "description": "No transfer was initiated or completed.",
+    "observedAt": null
+  },
+  "recordedAt": null
+}
