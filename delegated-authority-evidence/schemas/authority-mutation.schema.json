@@ -1,1 +1,49 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-behavioral-history:delegated-authority-evidence:authority-mutation:1.0",
+  "title": "Authority Mutation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mutationId",
+    "actor",
+    "targetGrantId",
+    "requestedChanges",
+    "mutationAuthorized",
+    "decision"
+  ],
+  "properties": {
+    "mutationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "actor": {
+      "type": "string",
+      "minLength": 1
+    },
+    "targetGrantId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestedChanges": {
+      "type": "object"
+    },
+    "mutationAuthorized": {
+      "type": "boolean"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "VALID",
+        "INVALID",
+        "UNRESOLVED"
+      ]
+    },
+    "reason": {
+      "type": ["string", "null"]
+    },
+    "authorizedBy": {
+      "type": ["string", "null"]
+    }
+  }
+}
