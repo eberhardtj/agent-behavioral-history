@@ -1,1 +1,36 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-behavioral-history:delegated-authority-evidence:authority-decision:1.0",
+  "title": "Authority Decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "grantId",
+    "operationId",
+    "status"
+  ],
+  "properties": {
+    "grantId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "operationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "HELD",
+        "CROSSED",
+        "UNRESOLVED"
+      ]
+    },
+    "reason": {
+      "type": ["string", "null"]
+    },
+    "ruleset": {
+      "type": ["string", "null"]
+    }
+  }
+}
