@@ -1,1 +1,58 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-behavioral-history:delegated-authority-evidence:record:1.0",
+  "title": "Delegated Authority Evidence Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordId",
+    "agentIdentity",
+    "authorityGrant",
+    "selectedOperation",
+    "authorityDecision",
+    "enforcementWitness",
+    "externalEffect"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "delegated-authority-evidence/1.0"
+    },
+    "recordId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agentIdentity": {
+      "$ref": "./agent-identity.schema.json"
+    },
+    "authorityGrant": {
+      "$ref": "./authority-grant.schema.json"
+    },
+    "authorityMutation": {
+      "oneOf": [
+        {
+          "$ref": "./authority-mutation.schema.json"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "selectedOperation": {
+      "$ref": "./selected-operation.schema.json"
+    },
+    "authorityDecision": {
+      "$ref": "./authority-decision.schema.json"
+    },
+    "enforcementWitness": {
+      "$ref": "./enforcement-witness.schema.json"
+    },
+    "externalEffect": {
+      "$ref": "./external-effect.schema.json"
+    },
+    "recordedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  }
+}
