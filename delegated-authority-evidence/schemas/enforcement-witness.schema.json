@@ -1,1 +1,40 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-behavioral-history:delegated-authority-evidence:enforcement-witness:1.0",
+  "title": "Enforcement Witness",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operationId",
+    "disposition"
+  ],
+  "properties": {
+    "operationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": ["string", "null"]
+    },
+    "enforcementPoint": {
+      "type": ["string", "null"]
+    },
+    "disposition": {
+      "type": "string",
+      "enum": [
+        "ALLOWED",
+        "BLOCKED",
+        "NOT_INVOKED",
+        "NOT_OBSERVED",
+        "UNKNOWN"
+      ]
+    },
+    "reason": {
+      "type": ["string", "null"]
+    },
+    "observedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  }
+}
