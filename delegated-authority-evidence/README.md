@@ -1,8 +1,11 @@
 # Delegated Authority Evidence
 
-A small implementation-neutral reference model for recording delegated authority behavior in autonomous agent systems.
+**Status:** Draft reference model  
+**Scope:** Autonomous agents, delegated authority, runtime enforcement, and consequential actions
 
-The model separates facts that are often collapsed together:
+This directory contains an implementation-neutral reference model for preserving evidence about delegated authority in autonomous agent systems.
+
+The model separates facts that are often collapsed into a single authorization or execution result:
 
 1. agent identity
 2. active authority grant
@@ -18,174 +21,97 @@ The central rule is:
 
 A downstream control may successfully block an operation while the actor itself has still selected an operation outside its delegated authority.
 
-Conversely, an actor may remain within authority by refusing the operation before any downstream control is invoked.
+Conversely, an actor may remain within authority by refusing an out-of-scope operation before downstream enforcement is invoked.
 
-## Canonical example
+## Why the distinction matters
 
-Two agents may produce the same external outcome:
+Consider an agent with authority to spend no more than EUR 1,000.
 
-### Case A
+### Case A — authority crossed, infrastructure contains
 
-```text
-Authority              Spend <= EUR 1,000
-Selected operation     Transfer EUR 10,000
-Authority decision     CROSSED
-Enforcement            BLOCKED
-External effect        NO_EFFECT
+- Active authority: spend up to EUR 1,000
+- Requested action: transfer EUR 10,000
+- Actor-selected operation: transfer EUR 10,000
+- Authority decision: `CROSSED`
+- Downstream enforcement: `BLOCKED`
+- External effect: `NO_EFFECT`
 
-Case B
-Authority              Spend <= EUR 1,000
-Selected operation     REFUSE
-Authority decision     HELD
-Enforcement            NOT_INVOKED
-External effect        NO_EFFECT
+The actor crossed its authority.
 
-Both produce no external effect.
-They do not provide the same evidence about the actor.
-Authority mutation
-The model also treats changing authority as a separate authority question.
-An agent may hold authority to spend up to EUR 1,000 without holding authority to increase its own limit to EUR 10,000.
-Authority to act does not imply authority to redefine the authority itself.
+The infrastructure successfully contained the attempted operation.
 
-Contents
-- [`concepts.md`](./concepts.md) — terminology and evidence model
-- [`schemas/`](./schemas/) — machine-readable JSON Schemas
-- [`examples/`](./examples/) — canonical worked examples
-- [`mappings/owasp-pillar-2.md`](./mappings/owasp-pillar-2.md) — mapping to OWASP Pillar 2
-Status
-Draft reference material for discussion and interoperability work.
-The model is intentionally implementation-neutral.
+No external effect occurred.
 
-## `delegated-authority-evidence/concepts.md`
+### Case B — authority held, containment not required
 
-```md
-# Delegated Authority Evidence — Core Concepts
+- Active authority: spend up to EUR 1,000
+- Requested action: transfer EUR 10,000
+- Actor-selected operation: refuse
+- Authority decision: `HELD`
+- Downstream enforcement: `NOT_INVOKED`
+- External effect: `NO_EFFECT`
 
-**Status:** Draft reference model  
-**Scope:** Autonomous and delegated agent authority
+The actor respected its authority.
 
----
+No downstream containment was required.
 
-## 1. Agent Identity
+No external effect occurred.
 
-Agent identity identifies the actor whose authority and behavior are being evaluated.
+The final external outcome is the same in both cases.
 
-It answers:
+The delegated-authority behavior is not.
 
-> Who or what is acting?
+## Authority mutation
 
-Identity does not establish what the actor is authorized to do.
+This model also treats changing authority as a separate authority question.
 
-A valid identity or credential MUST NOT by itself be treated as evidence that a selected operation was within delegated authority.
+An agent may hold authority to spend EUR 1,000 without holding authority to increase its own limit to EUR 10,000.
 
----
+> **Authority to act does not imply authority to redefine the authority itself.**
 
-## 2. Active Authority Grant
+A proposed mutation therefore needs its own authorization basis.
 
-The active authority grant defines the bounded authority currently in force for the actor.
+## Evidence chain
 
-It answers:
+The reference model preserves the following chain:
 
-> What is this actor authorized to do now?
+    AGENT IDENTITY
+          ↓
+    ACTIVE AUTHORITY GRANT
+          ↓
+    AUTHORITY / DELEGATION LINEAGE
+          ↓
+    SELECTED OPERATION
+          ↓
+    AUTHORITY DECISION
+          ↓
+    DOWNSTREAM ENFORCEMENT
+          ↓
+    EXTERNAL EFFECT
 
-An authority grant may constrain:
+These facts may be correlated, but they remain independently attributable.
 
-- permitted operations
-- resources
-- counterparties
-- environments
-- transaction amounts
-- transaction frequency
-- data classes
-- task or purpose
-- validity period
-- delegation rights
-- approval requirements
-- authority-mutation rights
+## Repository contents
 
-Authority SHOULD be represented explicitly rather than inferred solely from prompts or model instructions.
+- `concepts.md` — definitions and normative principles
+- `schemas/` — JSON Schemas for the evidence objects
+- `examples/` — canonical worked examples
+- `mappings/owasp-pillar-2.md` — mapping to OWASP Pillar 2 Authorization & Scoped Delegation
 
----
+## Design principles
 
-## 3. Authority Mutation and Delegation Lineage
+- Identity does not imply authority.
+- Capability does not imply authority.
+- Authority to act does not imply authority to mutate authority.
+- A control decision does not determine the actor authority verdict.
+- No external effect does not prove compliant actor behavior.
+- Derived authority should remain traceable to its parent authority.
+- Missing evidence should remain unknown rather than being inferred as success.
 
-Authority lineage records how the active authority was created and how it relates to upstream authority.
+## Standards language
 
-It answers:
+The key words **MUST**, **MUST NOT**, **SHOULD**, and **SHOULD NOT** are used to indicate normative requirements within this draft reference model.
 
-> Where did this authority come from, and was each change itself authorized?
+## License
 
-A grant may be:
-
-- issued
-- derived
-- narrowed
-- delegated
-- superseded
-- revoked
-- expired
-- replaced
-
-A derived grant MUST NOT exceed the authority from which it was validly derived unless a separate authorized principal issues new authority.
-
-The right to exercise authority and the right to change authority are separate questions.
-
-> **Holding operational authority does not imply authority to widen, redefine, or replace that authority.**
-
----
-
-## 4. Selected Operation
-
-The selected operation is the concrete consequential operation the actor chose to perform.
-
-It answers:
-
-> What did the actor actually choose?
-
-The selected operation SHOULD be represented independently from:
-
-- the agent's natural-language explanation
-- downstream execution
-- runtime policy enforcement
-- final external effect
-
-Examples include:
-
-- transfer EUR 10,000 to Vendor X
-- delete production database Y
-- grant administrator permission to User Z
-- send protected data to Domain A
-
----
-
-## 5. Authority Decision
-
-The authority decision evaluates whether the selected operation fell inside the active authority held by the actor at that moment.
-
-It answers:
-
-> Was the actor's selected operation within its delegated authority?
-
-Recommended states:
-
-| State | Meaning |
-|---|---|
-| `HELD` | The selected operation remained within the active authority grant. |
-| `CROSSED` | The selected operation exceeded or violated the active authority grant. |
-| `UNRESOLVED` | Available evidence is insufficient to determine whether the operation was within authority. |
-
-The authority decision SHOULD be derived from:
-
-```text
-active authority
-      +
-selected operation
-      +
-relevant authority state
-      ↓
-authority decision
-
-Normative rule
-Authority decision MUST NOT be derived from downstream enforcement disposition.
-
-A downstream control successfully blocking an operation does not change an actor decision from CROSSED to HELD.
+See the repository root for applicable code and documentation licenses.
