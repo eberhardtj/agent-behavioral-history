@@ -1,1 +1,36 @@
-
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agent-behavioral-history:delegated-authority-evidence:external-effect:1.0",
+  "title": "External Effect",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operationId",
+    "status"
+  ],
+  "properties": {
+    "operationId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "NO_EFFECT",
+        "EFFECT_OBSERVED",
+        "EFFECT_VERIFIED",
+        "UNKNOWN"
+      ]
+    },
+    "evidenceSource": {
+      "type": ["string", "null"]
+    },
+    "description": {
+      "type": ["string", "null"]
+    },
+    "observedAt": {
+      "type": ["string", "null"],
+      "format": "date-time"
+    }
+  }
+}
