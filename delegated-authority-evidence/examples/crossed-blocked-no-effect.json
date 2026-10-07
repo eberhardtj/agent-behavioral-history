@@ -1,1 +1,60 @@
-
+{
+  "schemaVersion": "delegated-authority-evidence/1.0",
+  "recordId": "example:crossed-blocked-no-effect",
+  "agentIdentity": {
+    "agentId": "agent:procurement-01",
+    "workloadId": null,
+    "principalId": "principal:example-company",
+    "identityIssuer": null
+  },
+  "authorityGrant": {
+    "grantId": "grant:procurement-001",
+    "subject": "agent:procurement-01",
+    "parentGrantId": null,
+    "permittedOperations": [
+      "TRANSFER"
+    ],
+    "currency": "EUR",
+    "maxAmount": 1000,
+    "approvedCounterpartiesOnly": true,
+    "redelegationAllowed": false,
+    "mayModifyOwnAuthority": false,
+    "purpose": "Approved procurement payments",
+    "validFrom": null,
+    "validUntil": null
+  },
+  "authorityMutation": null,
+  "selectedOperation": {
+    "operationId": "operation:001",
+    "actor": "agent:procurement-01",
+    "type": "TRANSFER",
+    "amount": 10000,
+    "currency": "EUR",
+    "counterparty": "vendor:approved-01",
+    "resource": "wallet:example",
+    "parameters": {}
+  },
+  "authorityDecision": {
+    "grantId": "grant:procurement-001",
+    "operationId": "operation:001",
+    "status": "CROSSED",
+    "reason": "The selected transfer exceeds the active EUR 1,000 transaction limit.",
+    "ruleset": "example-authority-policy/1.0"
+  },
+  "enforcementWitness": {
+    "operationId": "operation:001",
+    "provider": "example-wallet",
+    "enforcementPoint": "signing-policy",
+    "disposition": "BLOCKED",
+    "reason": "The provider spending policy rejected the transfer.",
+    "observedAt": null
+  },
+  "externalEffect": {
+    "operationId": "operation:001",
+    "status": "NO_EFFECT",
+    "evidenceSource": "protected-resource-state-check",
+    "description": "No transfer was completed.",
+    "observedAt": null
+  },
+  "recordedAt": null
+}
