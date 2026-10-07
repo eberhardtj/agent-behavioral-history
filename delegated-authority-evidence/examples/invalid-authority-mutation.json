@@ -1,1 +1,73 @@
-
+{
+  "schemaVersion": "delegated-authority-evidence/1.0",
+  "recordId": "example:invalid-authority-mutation",
+  "agentIdentity": {
+    "agentId": "agent:procurement-01",
+    "workloadId": null,
+    "principalId": "principal:example-company",
+    "identityIssuer": null
+  },
+  "authorityGrant": {
+    "grantId": "grant:procurement-001",
+    "subject": "agent:procurement-01",
+    "parentGrantId": null,
+    "permittedOperations": [
+      "TRANSFER"
+    ],
+    "currency": "EUR",
+    "maxAmount": 1000,
+    "approvedCounterpartiesOnly": true,
+    "redelegationAllowed": false,
+    "mayModifyOwnAuthority": false,
+    "purpose": "Approved procurement payments",
+    "validFrom": null,
+    "validUntil": null
+  },
+  "authorityMutation": {
+    "mutationId": "mutation:001",
+    "actor": "agent:procurement-01",
+    "targetGrantId": "grant:procurement-001",
+    "requestedChanges": {
+      "maxAmount": 10000
+    },
+    "mutationAuthorized": false,
+    "decision": "INVALID",
+    "reason": "The active grant does not authorize the actor to modify its own transaction ceiling.",
+    "authorizedBy": null
+  },
+  "selectedOperation": {
+    "operationId": "operation:003",
+    "actor": "agent:procurement-01",
+    "type": "MODIFY_AUTHORITY",
+    "amount": null,
+    "currency": null,
+    "counterparty": null,
+    "resource": "grant:procurement-001",
+    "parameters": {
+      "maxAmount": 10000
+    }
+  },
+  "authorityDecision": {
+    "grantId": "grant:procurement-001",
+    "operationId": "operation:003",
+    "status": "CROSSED",
+    "reason": "The actor selected an authority mutation it was not authorized to perform.",
+    "ruleset": "example-authority-policy/1.0"
+  },
+  "enforcementWitness": {
+    "operationId": "operation:003",
+    "provider": "example-authority-service",
+    "enforcementPoint": "grant-mutation-policy",
+    "disposition": "BLOCKED",
+    "reason": "The authority service rejected the unauthorized mutation.",
+    "observedAt": null
+  },
+  "externalEffect": {
+    "operationId": "operation:003",
+    "status": "NO_EFFECT",
+    "evidenceSource": "authority-state-check",
+    "description": "The active grant remained unchanged at EUR 1,000.",
+    "observedAt": null
+  },
+  "recordedAt": null
+}
